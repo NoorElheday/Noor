@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نُور - أشهر المساجد</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --accent: #c5a02d; --bg: #020617; --text: #fff; --glass: rgba(255,255,255,0.05); --border: rgba(255,255,255,0.1); }
+        body.light-mode { --bg: #7dd3fc; --text: #0c4a6e; --glass: rgba(255,255,255,0.4); --border: rgba(125,211,252,0.5); }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Tajawal', sans-serif; transition: 1s; min-height: 100vh; }
+        
+        .sky { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        .sun { position: absolute; top: -150px; left: 10%; width: 100px; height: 100px; background: radial-gradient(circle, #fffd7f, #fdbb2d); border-radius: 50%; transition: 1.5s; }
+        .moon { position: absolute; top: 60px; left: 10%; width: 80px; height: 80px; background: #f1f5f9; border-radius: 50%; transition: 1.5s; }
+        .moon::after { content: ''; position: absolute; top: -10px; left: 30px; width: 80px; height: 80px; background: var(--bg); border-radius: 50%; transition: 1s; }
+        body.light-mode .sun { top: 60px; } body.light-mode .moon { top: -150px; }
+
+        .toggle-btn { position: fixed; top: 20px; left: 20px; z-index: 1000; background: var(--glass); border: 1px solid var(--border); color: var(--text); width: 50px; height: 50px; border-radius: 50%; cursor: pointer; backdrop-filter: blur(10px); }
+        
+        .container { max-width: 1000px; margin: auto; padding: 100px 20px; }
+        .m-card { background: var(--glass); border-radius: 30px; border: 1px solid var(--border); backdrop-filter: blur(20px); overflow: hidden; margin-bottom: 40px; display: flex; flex-direction: column; transition: 0.3s; }
+        .m-card:hover { transform: translateY(-5px); border-color: var(--accent); }
+        
+        /* مكان الصورة */
+        .m-image { width: 100%; height: 250px; background: rgba(255,255,255,0.1); display: flex; align-items: center; justify-content: center; overflow: hidden; border-bottom: 1px solid var(--border); }
+        .m-image img { width: 100%; height: 100%; object-fit: cover; }
+        .img-placeholder { color: var(--accent); font-size: 0.9rem; text-align: center; opacity: 0.6; }
+
+        .m-info { padding: 30px; }
+        .m-info h3 { color: var(--accent); font-family: 'Amiri'; font-size: 2rem; margin: 0 0 15px 0; }
+        .m-info p { line-height: 1.8; font-size: 1.1rem; opacity: 0.9; }
+        .loc-tag { background: var(--accent); color: #000; padding: 5px 15px; border-radius: 10px; font-weight: bold; margin-bottom: 10px; display: inline-block; }
+    </style>
+</head>
+<body>
+    <div class="sky"><div class="sun"></div><div class="moon"></div></div>
+    <button class="toggle-btn" onclick="document.body.classList.toggle('light-mode')"><i class="fa-solid fa-circle-half-stroke"></i></button>
+    <a href="index.html" style="position:fixed; top:25px; right:25px; color:var(--accent); text-decoration:none; font-weight:bold; z-index:1001;">الرئيسية ←</a>
+
+    <div class="container">
+        <h1 style="text-align:center; color:var(--accent); font-family:'Amiri'; font-size: 3.5rem; margin-bottom: 50px;">أعظم المساجد</h1>
+
+        <div class="m-card">
+            <div class="m-image">
+                <img src="makkah.jpg" alt="المسجد الحرام">
+                
+            </div>
+            <div class="m-info">
+                <span class="loc-tag">مكة المكرمة</span>
+                <h3>المسجد الحرام</h3>
+                <p>أول بيت وُضع للناس، تتوسطه الكعبة المشرفة. هو قبلة المسلمين وأعظم بقعة على وجه الأرض، الصلاة فيه تعادل مئة ألف صلاة فيما سواه.</p>
+            </div>
+        </div>
+
+        <div class="m-card">
+            <div class="m-image">
+                <img src="madinah.jpg" alt="المسجد النبوي">
+                
+            </div>
+            <div class="m-info">
+                <span class="loc-tag">المدينة المنورة</span>
+                <h3>المسجد النبوي</h3>
+                <p>مسجد رسول الله ﷺ، ويضم الروضة الشريفة والقبر الطاهر. هو ثاني الحرمين الشريفين، ومركز انطلاق نور الإسلام للعالم أجمع.</p>
+            </div>
+        </div>
+
+        <div class="m-card">
+            <div class="m-image">
+                <img src="aqsa.jpg" alt="المسجد الأقصى">
+            </div>
+            <div class="m-info">
+                <span class="loc-tag">القدس الشريف</span>
+                <h3>المسجد الأقصى</h3>
+                <p>أولى القبلتين وثالث الحرمين الشريفين، ومسرى النبي ﷺ ومعراجه إلى السماء. بقعة مباركة في قلب كل مسلم.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // كود بسيط لإخفاء النص التوضيحي إذا وجدت الصورة
+        document.querySelectorAll('img').forEach((img, i) => {
+            img.onerror = function() { this.style.display='none'; };
+            img.onload = function() { document.getElementById('p'+(i+1)).style.display='none'; };
+        });
+    </script>
+</body>
+</html>

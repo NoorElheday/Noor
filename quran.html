@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نُور - المصحف الإلكتروني</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --accent: #c5a02d; --bg: #020617; --text: #fff; --glass: rgba(255,255,255,0.05); --border: rgba(255,255,255,0.1); }
+        body.light-mode { --bg: #7dd3fc; --text: #0c4a6e; --glass: rgba(255,255,255,0.4); --border: rgba(125,211,252,0.5); }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Tajawal', sans-serif; transition: 1s; min-height: 100vh; }
+        
+        .sky { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        .sun { position: absolute; top: -150px; left: 10%; width: 100px; height: 100px; background: radial-gradient(circle, #fffd7f, #fdbb2d); border-radius: 50%; transition: 1.5s; }
+        .moon { position: absolute; top: 60px; left: 10%; width: 80px; height: 80px; background: #f1f5f9; border-radius: 50%; transition: 1.5s; }
+        .moon::after { content: ''; position: absolute; top: -10px; left: 30px; width: 80px; height: 80px; background: var(--bg); border-radius: 50%; transition: 1s; }
+        body.light-mode .sun { top: 60px; } body.light-mode .moon { top: -150px; }
+
+        .toggle-btn { position: fixed; top: 20px; left: 20px; z-index: 1000; background: var(--glass); border: 1px solid var(--border); color: var(--text); width: 50px; height: 50px; border-radius: 50%; cursor: pointer; backdrop-filter: blur(10px); }
+
+        .container { max-width: 900px; margin: auto; padding: 100px 20px; }
+        .quran-box { background: var(--glass); padding: 40px; border-radius: 35px; border: 1px solid var(--border); backdrop-filter: blur(20px); box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
+        
+        select { width: 100%; padding: 15px; border-radius: 15px; background: var(--bg); color: var(--text); border: 1px solid var(--accent); margin-bottom: 30px; font-size: 1.1rem; }
+        
+        .quran-text { font-family: 'Amiri', serif; font-size: 2.2rem; line-height: 2.5; text-align: center; direction: rtl; min-height: 300px; }
+        .ayah-num { color: var(--accent); font-size: 1.2rem; margin: 0 5px; border: 1px solid var(--accent); border-radius: 50%; padding: 2px 8px; font-family: 'Tajawal'; }
+        
+        .back-home { position: fixed; top: 25px; right: 25px; color: var(--accent); text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="sky"><div class="sun"></div><div class="moon"></div></div>
+    <button class="toggle-btn" onclick="document.body.classList.toggle('light-mode')"><i class="fa-solid fa-circle-half-stroke"></i></button>
+    <a href="index.html" class="back-home">الرئيسية ←</a>
+
+    <div class="container">
+        <div class="quran-box">
+            <h1 style="text-align:center; font-family:'Amiri'; color:var(--accent); font-size: 3rem;">المصحف الشريف</h1>
+            <select id="surahSelect" onchange="loadSurah()">
+                <option value="">-- اختر السورة للقراءة --</option>
+            </select>
+            <div id="quranContent" class="quran-text">فضل قراءة القرآن: "اقرأوا القرآن فإنه يأتي يوم القيامة شفيعاً لأصحابه". اختر سورة لتبدأ..</div>
+        </div>
+    </div>
+
+    <script>
+        async function init() {
+            const res = await fetch('https://api.alquran.cloud/v1/surah');
+            const data = await res.json();
+            const sel = document.getElementById('surahSelect');
+            data.data.forEach(s => {
+                let opt = document.createElement('option');
+                opt.value = s.number; opt.innerText = `${s.number}. ${s.name}`;
+                sel.appendChild(opt);
+            });
+        }
+        async function loadSurah() {
+            const num = document.getElementById('surahSelect').value;
+            if(!num) return;
+            const content = document.getElementById('quranContent');
+            content.innerHTML = "<i class='fa-solid fa-spinner fa-spin'></i> جاري تحميل كلام الله..";
+            const res = await fetch(`https://api.alquran.cloud/v1/surah/${num}/quran-uthmani`);
+            const data = await res.json();
+            let html = "";
+            data.data.ayahs.forEach(a => {
+                html += `${a.text} <span class="ayah-num">${a.numberInSurah}</span> `;
+            });
+            content.innerHTML = html;
+        }
+        window.onload = init;
+    </script>
+</body>
+</html>

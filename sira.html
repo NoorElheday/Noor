@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نُور - السيرة العطرة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --accent: #c5a02d; --bg: #020617; --text: #fff; --glass: rgba(255,255,255,0.05); --border: rgba(255,255,255,0.1); }
+        body.light-mode { --bg: #7dd3fc; --text: #0c4a6e; --glass: rgba(255,255,255,0.4); --border: rgba(125,211,252,0.5); }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Tajawal', sans-serif; transition: 1s; min-height: 100vh; line-height: 1.8; }
+        
+        .sky { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        .sun { position: absolute; top: -150px; left: 10%; width: 100px; height: 100px; background: radial-gradient(circle, #fffd7f, #fdbb2d); border-radius: 50%; transition: 1.5s; }
+        .moon { position: absolute; top: 60px; left: 10%; width: 80px; height: 80px; background: #f1f5f9; border-radius: 50%; transition: 1.5s; }
+        .moon::after { content: ''; position: absolute; top: -10px; left: 30px; width: 80px; height: 80px; background: var(--bg); border-radius: 50%; transition: 1s; }
+        body.light-mode .sun { top: 60px; } body.light-mode .moon { top: -150px; }
+
+        .container { max-width: 850px; margin: auto; padding: 100px 20px; }
+        .sira-content { background: var(--glass); padding: 45px; border-radius: 40px; border: 1px solid var(--border); backdrop-filter: blur(25px); box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
+        h2 { font-family: 'Amiri'; color: var(--accent); font-size: 2.2rem; border-bottom: 2px solid var(--accent); display: inline-block; margin-bottom: 20px; }
+        p { font-size: 1.2rem; text-align: justify; margin-bottom: 40px; opacity: 0.9; }
+        .toggle-btn { position: fixed; top: 20px; left: 20px; z-index: 1000; background: var(--glass); border: 1px solid var(--border); width: 50px; height: 50px; border-radius: 50%; cursor: pointer; color: var(--text); }
+    </style>
+</head>
+<body>
+    <div class="sky"><div class="sun"></div><div class="moon"></div></div>
+    <button class="toggle-btn" onclick="document.body.classList.toggle('light-mode')"><i class="fa-solid fa-circle-half-stroke"></i></button>
+    <a href="index.html" style="position:fixed; top:25px; right:25px; color:var(--accent); text-decoration:none; font-weight:bold;">الرئيسية ←</a>
+
+    <div class="container">
+        <div class="sira-content">
+            <h1 style="text-align:center; color:var(--accent); font-family:'Amiri'; font-size: 3.5rem;">سيرة خير الأنام ﷺ</h1>
+            
+            <h2>المولد الشريف</h2>
+            <p>وُلد الحبيب في مكة عام الفيل، يتيماً فكفله الله ورحم به البشرية. كان يُعرف بـ "الصادق الأمين" حتى قبل البعثة، لما رأى فيه قومه من كمال الأخلاق ورزانة العقل.</p>
+
+            <h2>نور النبوة</h2>
+            <p>نزل عليه الوحي في غار حراء وهو في الأربعين، فبدأت دعوته بالتوحيد والعدل. واجه الصعاب بصبر الجبال، وهاجر للمدينة ليبني مجتمعاً يسوده الحب والإيثار بين المهاجرين والأنصار.</p>
+
+            <h2>الوداع والوصية</h2>
+            <p>أتم الدين وأدى الأمانة، وفي حجة الوداع أوصانا بالنساء خيراً وبالتمسك بالقرآن والسنة. رحل ﷺ وترك فينا نوراً لا ينطفئ إلى يوم القيامة.</p>
+        </div>
+    </div>
+</body>
+</html>

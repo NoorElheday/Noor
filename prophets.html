@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>نُور - موكب الأنبياء</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --accent: #c5a02d; --bg: #020617; --text: #fff; --glass: rgba(255,255,255,0.05); --border: rgba(255,255,255,0.1); }
+        body.light-mode { --bg: #7dd3fc; --text: #0c4a6e; --glass: rgba(255,255,255,0.4); --border: rgba(125,211,252,0.5); }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Tajawal', sans-serif; transition: 1s; padding-bottom: 50px; }
+        .sky { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        .sun { position: absolute; top: -150px; left: 10%; width: 100px; height: 100px; background: radial-gradient(circle, #fffd7f, #fdbb2d); border-radius: 50%; transition: 1.5s; }
+        .moon { position: absolute; top: 60px; left: 10%; width: 80px; height: 80px; background: #f1f5f9; border-radius: 50%; transition: 1.5s; }
+        .moon::after { content: ''; position: absolute; top: -10px; left: 30px; width: 80px; height: 80px; background: var(--bg); border-radius: 50%; transition: 1s; }
+        body.light-mode .sun { top: 60px; } body.light-mode .moon { top: -150px; }
+        .toggle-btn { position: fixed; top: 20px; left: 20px; z-index: 1000; background: var(--glass); border: 1px solid var(--border); color: var(--text); width: 50px; height: 50px; border-radius: 50%; cursor: pointer; }
+        
+        .container { max-width: 1000px; margin: auto; padding: 100px 20px; display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .p-card { background: var(--glass); padding: 25px; border-radius: 30px; border: 1px solid var(--border); backdrop-filter: blur(10px); transition: 0.3s; }
+        .p-card:hover { transform: translateY(-10px); border-color: var(--accent); }
+        .p-card h3 { color: var(--accent); margin-top: 0; display: flex; align-items: center; gap: 10px; }
+        .p-card p { font-size: 0.95rem; line-height: 1.6; opacity: 0.9; }
+    </style>
+</head>
+<body>
+    <div class="sky"><div class="sun"></div><div class="moon"></div></div>
+    <button class="toggle-btn" onclick="document.body.classList.toggle('light-mode')"><i class="fa-solid fa-circle-half-stroke"></i></button>
+    <a href="index.html" style="position:fixed; top:25px; right:25px; color:var(--accent); text-decoration:none; font-weight:bold; z-index:1001;">الرئيسية ←</a>
+
+    <h1 style="text-align:center; color:var(--accent); margin-top: 80px; font-size: 3rem;">قصص الأنبياء والرسل</h1>
+    
+    <div class="container">
+        <div class="p-card">
+            <h3><i class="fa-solid fa-seedling"></i> آدم عليه السلام</h3>
+            <p>أبو البشر وأول من خلق الله بيده. علمه الأسماء كلها وأسجد له ملائكته، ونزلت قصته لتكون درساً للبشرية في التوبة والعودة إلى الله بعد الخطأ.</p>
+        </div>
+        <div class="p-card">
+            <h3><i class="fa-solid fa-ship"></i> نوح عليه السلام</h3>
+            <p>شيخ المرسلين، ظل يدعو قومه 950 سنة بصدور رحبة. بنى السفينة بمعجزة إلهية في وسط الصحراء لتنجو البشرية المؤمنة من الطوفان العظيم.</p>
+        </div>
+        <div class="p-card">
+            <h3><i class="fa-solid fa-fire"></i> إبراهيم عليه السلام</h3>
+            <p>خليل الرحمن وأبو الأنبياء. الذي ألقي في النار فكانت عليه برداً وسلاماً، وهو الذي بنى الكعبة المشرفة مع ابنه إسماعيل ليكون بيتاً مباركاً للناس.</p>
+        </div>
+        <div class="p-card">
+            <h3><i class="fa-solid fa-crown"></i> يوسف عليه السلام</h3>
+            <p>صاحب أجمل قصة في القرآن. من غيابات الجب والسجن إلى خزائن مصر، ضرب أروع الأمثلة في الصبر على البلاء والوفاء والعفو عند المقدرة.</p>
+        </div>
+        <div class="p-card">
+            <h3><i class="fa-solid fa-wand-magic-sparkles"></i> موسى عليه السلام</h3>
+            <p>كليم الله الذي واجه فرعون الطاغية بمعجزة العصا واليد البيضاء. شق الله له البحر لينجي بني إسرائيل في مشهد خلده التاريخ.</p>
+        </div>
+        <div class="p-card" style="border: 2px solid var(--accent);">
+            <h3><i class="fa-solid fa-star-and-crescent"></i> محمد ﷺ</h3>
+            <p>خاتم الأنبياء والرسل، ورحمة الله للعالمين. جاء بالمعجزة الخالدة (القرآن الكريم) ليخرج الناس من الظلمات إلى النور ويتم مكارم الأخلاق.</p>
+        </div>
+    </div>
+</body>
+</html>

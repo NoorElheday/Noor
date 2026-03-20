@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نُور - بوابة الهداية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@700&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --accent: #c5a02d; --bg: #020617; --text: #fff; --glass: rgba(255,255,255,0.05); --border: rgba(255,255,255,0.1); }
+        body.light-mode { --bg: #7dd3fc; --text: #0c4a6e; --glass: rgba(255,255,255,0.4); --border: rgba(125,211,252,0.5); }
+        body { margin: 0; background: var(--bg); color: var(--text); font-family: 'Tajawal', sans-serif; transition: 1s; min-height: 100vh; overflow-x: hidden; }
+        
+        /* الشمس والقمر الحقيقيين */
+        .sky { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
+        .sun { position: absolute; top: -150px; left: 10%; width: 120px; height: 120px; background: radial-gradient(circle, #fffd7f, #fdbb2d); border-radius: 50%; box-shadow: 0 0 60px #fdbb2d; transition: 1.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .moon { position: absolute; top: 60px; left: 10%; width: 90px; height: 90px; background: #f1f5f9; border-radius: 50%; box-shadow: 0 0 30px rgba(255,255,255,0.2); transition: 1.5s; }
+        .moon::after { content: ''; position: absolute; top: -10px; left: 30px; width: 90px; height: 90px; background: var(--bg); border-radius: 50%; transition: 1s; }
+        body.light-mode .sun { top: 60px; } body.light-mode .moon { top: -150px; }
+
+        /* الزرار الموحد */
+        .toggle-btn { position: fixed; top: 20px; left: 20px; z-index: 1000; background: var(--glass); border: 1px solid var(--border); color: var(--text); width: 55px; height: 55px; border-radius: 50%; cursor: pointer; backdrop-filter: blur(10px); font-size: 1.5rem; transition: 0.3s; }
+        .toggle-btn:hover { transform: scale(1.1); color: var(--accent); }
+
+        .container { max-width: 1000px; margin: auto; padding: 20px; text-align: center; padding-top: 80px; }
+        h1 { font-family: 'Amiri', serif; font-size: 5.5rem; color: var(--accent); margin: 0; text-shadow: 0 10px 20px rgba(0,0,0,0.5); }
+        
+        .clock-section { margin: 20px 0; }
+        #clock { font-size: 3rem; font-weight: 700; color: var(--accent); letter-spacing: 2px; }
+        
+        .prayer-card { background: var(--glass); padding: 30px; border-radius: 35px; border: 1px solid var(--border); backdrop-filter: blur(15px); margin-bottom: 40px; }
+        select { background: var(--bg); color: var(--text); border: 2px solid var(--accent); padding: 12px; border-radius: 15px; width: 70%; font-size: 1.1rem; margin-bottom: 25px; outline: none; }
+        
+        .p-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 15px; }
+        .p-item { background: rgba(0,0,0,0.3); padding: 20px; border-radius: 20px; border: 1px solid var(--border); transition: 0.3s; }
+        .p-item:hover { border-color: var(--accent); transform: translateY(-5px); }
+        .p-item span { font-size: 0.9rem; opacity: 0.7; display: block; margin-bottom: 5px; }
+        .p-item strong { font-size: 1.4rem; color: var(--accent); }
+
+        .main-menu { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; }
+        .menu-link { background: var(--glass); padding: 25px; border-radius: 30px; text-decoration: none; color: var(--text); border: 1px solid var(--border); transition: 0.4s; backdrop-filter: blur(10px); }
+        .menu-link:hover { background: rgba(197, 160, 45, 0.1); border-color: var(--accent); transform: scale(1.05); }
+        .menu-link i { font-size: 2.5rem; color: var(--accent); margin-bottom: 15px; display: block; }
+    </style>
+</head>
+<body>
+    <div class="sky"><div class="sun"></div><div class="moon"></div></div>
+    <button class="toggle-btn" onclick="document.body.classList.toggle('light-mode')"><i class="fa-solid fa-circle-half-stroke"></i></button>
+
+    <div class="container">
+        <div class="clock-section">
+            <div id="clock">00:00:00</div>
+            <select id="timeFormat" onchange="getPrayers()" style="width: auto; padding: 5px 15px; margin-top: 10px;">
+                <option value="12">نظام 12 ساعة</option>
+                <option value="24">نظام 24 ساعة</option>
+            </select>
+        </div>
+
+        <h1>نُور</h1>
+        <p style="font-size: 1.2rem; margin-bottom: 30px; opacity: 0.8;">زادُكَ الإيماني في رحابِ القرآن والسنة</p>
+
+        <div class="prayer-card">
+            <h3 style="margin-bottom: 15px;"><i class="fa-solid fa-location-dot"></i> مواقيت الصلاة حسب مدينتك</h3>
+            <select id="citySelect" onchange="getPrayers()"></select>
+            <div class="p-grid" id="prayers"></div>
+        </div>
+
+        <div class="main-menu">
+            <a href="audio.html" class="menu-link"><i class="fa-solid fa-microphone-lines"></i><h4>المكتبة الصوتية</h4></a>
+            <a href="quran.html" class="menu-link"><i class="fa-solid fa-book-open"></i><h4>المصحف الكريم</h4></a>
+            <a href="hadith.html" class="menu-link"><i class="fa-solid fa-scroll"></i><h4>أحاديث نبوية</h4></a>
+            <a href="battles.html" class="menu-link"><i class="fa-solid fa-shield-halved"></i><h4>غزوات الرسول</h4></a>
+            <a href="pillars.html" class="menu-link"><i class="fa-solid fa-kaaba"></i><h4>أركان الإسلام</h4></a>
+            <a href="prophets.html" class="menu-link"><i class="fa-solid fa-user-check"></i><h4>قصص الأنبياء</h4></a>
+            <a href="mosques.html" class="menu-link"><i class="fa-solid fa-mosque"></i><h4>أشهر المساجد</h4></a>
+            <a href="ruqya.html" class="menu-link"><i class="fa-solid fa-hand-holding-heart"></i><h4>الرقية الشرعية</h4></a>
+            <a href="sira.html" class="menu-link"><i class="fa-solid fa-heart"></i><h4>السيرة العطرة</h4></a>
+        </div>
+    </div>
+
+    <script>
+        const cities = [
+            {n:"القاهرة، مصر",c:"Cairo",e:"Egypt"},{n:"مكة، السعودية",c:"Makkah",e:"Saudi Arabia"},
+            {n:"القدس، فلسطين",c:"Jerusalem",e:"Palestine"},{n:"دبي، الإمارات",c:"Dubai",e:"UAE"},
+            {n:"عمان، الأردن",c:"Amman",e:"Jordan"},{n:"الرباط، المغرب",c:"Rabat",e:"Morocco"},
+            {n:"الجزائر العاصمة",c:"Algiers",e:"Algeria"},{n:"تونس العاصمة",c:"Tunis",e:"Tunisia"},
+            {n:"الكويت العاصمة",c:"Kuwait City",e:"Kuwait"},{n:"الدوحة، قطر",c:"Doha",e:"Qatar"},
+            {n:"بغداد، العراق",c:"Baghdad",e:"Iraq"},{n:"بيروت، لبنان",c:"Beirut",e:"Lebanon"},
+            {n:"إسطنبول، تركيا",c:"Istanbul",e:"Turkey"},{n:"صنعاء، اليمن",c:"Sanaa",e:"Yemen"},
+            {n:"الخرطوم، السودان",c:"Khartoum",e:"Sudan"} 
+            /* كمل الـ 50 هنا يا محمد بنفس النمط */
+        ];
+
+        function init() {
+            const sel = document.getElementById('citySelect');
+            cities.forEach((c, i) => sel.innerHTML += `<option value="${i}">${c.n}</option>`);
+            updateClock();
+            setInterval(updateClock, 1000);
+            getPrayers();
+        }
+
+        function updateClock() {
+            const now = new Date();
+            document.getElementById('clock').innerText = now.toLocaleTimeString('ar-EG', {hour12: false});
+        }
+
+        async function getPrayers() {
+            const city = cities[document.getElementById('citySelect').value];
+            const res = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${city.c}&country=${city.e}&method=4`);
+            const data = await res.json();
+            const times = data.data.timings;
+            const names = {Fajr:"الفجر", Dhuhr:"الظهر", Asr:"العصر", Maghrib:"المغرب", Isha:"العشاء"};
+            const grid = document.getElementById('prayers');
+            grid.innerHTML = '';
+            
+            for(let key in names) {
+                let time = times[key];
+                if(document.getElementById('timeFormat').value == "12") {
+                    let [h, m] = time.split(':');
+                    let ampm = h >= 12 ? ' م' : ' ص';
+                    h = h % 12 || 12;
+                    time = h + ":" + m + ampm;
+                }
+                grid.innerHTML += `<div class="p-item"><span>${names[key]}</span><strong>${time}</strong></div>`;
+            }
+        }
+        window.onload = init;
+    </script>
+</body>
+</html>
